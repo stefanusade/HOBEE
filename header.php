@@ -20,6 +20,7 @@ if(isset($_SESSION['login'])){
     <meta name="description" content="">
     <title><?= "HOBEE - ".$page; ?></title>
     <!-- stylesheet -->
+    <link rel="icon" href="./assets/img/Logo.png" type="image/png">
     <link href="./assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="./assets/css/style.css?v=<?= date('Y-m-d H:i'); ?>" rel="stylesheet">
     <link href="./assets/css/headers.css" rel="stylesheet">
@@ -34,17 +35,17 @@ if(isset($_SESSION['login'])){
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="./assets/js/main.js"></script>
   </head>
-  <body>
+  <body class="bg-warning">
     
-    <div class="container">
+    <div class="container-fluid px-lg-4 navbar-guest">
       <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
-        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+        <a href="index.php" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+          <img src="./assets/img/Logo.png" height="40"/>
         </a>
   
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
           <li><a href="index.php" class="nav-link px-2 link-secondary">Beranda</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Edukasi</a></li>
+          <li><a href="edukasi.php" class="nav-link px-2 link-dark">Edukasi</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">Toko</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">Tentang</a></li>
         </ul>
@@ -52,11 +53,11 @@ if(isset($_SESSION['login'])){
         <div class="col-md-3 text-end">
           <?php if(isset($_SESSION['login']) && $_SESSION['role'] == 3):?>
             <a class="text-dark mx-3" href="./customer/cart.php"><i class="fas fa-shopping-cart"></i></a>
-            <a  class="me-2" href="./customer/index.php"><img src="./assets/uploads/profile/<?=$foto;?>" style="height:40px; border-radius:50px; border:1px solid black"></a>
+            <a  class="me-2" href="./customer/index.php"><img src="./assets/uploads/profile/<?=$foto;?>" class="profpic-sm"></a>
             <a class="btn text-danger ml-3" href="logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
           <?php else: ?>
-            <a  class="btn btn-outline-primary me-2" href="login.php">Masuk</a>
-            <a class="btn btn-primary" href="register.php">Daftar</a>
+            <a  class="btn-navbar me-2" href="login.php">Masuk</a>
+            <a class="btn-navbar" href="register.php">Daftar</a>
           <?php endif; ?>
         </div>
       </header>

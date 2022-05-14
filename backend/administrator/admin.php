@@ -8,7 +8,7 @@ include "header.php"; ?>
 				<h4 class="page-title">Admin</h4>
 				<ul class="breadcrumbs">
 					<li class="nav-home">
-				    	<a href="#">
+				    	<a href="index.php">
 			    	    	<i class="flaticon-home"></i>
 		    			</a>
 					</li>
@@ -22,7 +22,7 @@ include "header.php"; ?>
 						<i class="flaticon-right-arrow"></i>
 					</li>
 					<li class="nav-item">
-					    <a href="#">Admin</a>
+					    <a href="admin.php">Admin</a>
 					</li>
 				</ul>
 			</div>
@@ -38,6 +38,7 @@ include "header.php"; ?>
 											<th>Nama</th>
 											<th>Email</th>
 											<th>Alamat</th>
+											<th>Aksi</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -51,6 +52,11 @@ include "header.php"; ?>
 										                <td>$d[nama]</td>
 										                <td>$d[email]</td>
 										                <td>$alamat</td>
+										                <td>
+										                <form action='details.php' method='POST'>
+										                <input type='hidden' name='role' value='admin'/>
+										                <button class='btn btn-sm btn-primary' type='submit' name='lihat' value='$d[id]'><i class='fas fa-eye'></i></button>
+										                </form></td>
 										            </tr>
 										        ";
 										        $i++;

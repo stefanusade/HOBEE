@@ -20,7 +20,7 @@ if($profpic==''){
 <html lang="id">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Admin Dashboard</title>
+	<title>Supplier Dashboard</title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
 	<link rel="icon" href="../assets/img/icon.ico" type="image/x-icon"/>
 
@@ -45,6 +45,47 @@ if($profpic==''){
 	<link rel="stylesheet" href="../assets/css/demo.css">
 </head>
 <body>
+    	<!--   Core JS Files   -->
+	<script src="../assets/js/core/jquery.3.2.1.min.js"></script>
+	<script src="../assets/js/core/popper.min.js"></script>
+	<script src="../assets/js/core/bootstrap.min.js"></script>
+
+	<!-- jQuery UI -->
+	<script src="../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+	<script src="../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+	<!-- jQuery Scrollbar -->
+	<script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+
+	<!-- Chart JS -->
+	<script src="../assets/js/plugin/chart.js/chart.min.js"></script>
+
+	<!-- jQuery Sparkline -->
+	<script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+	<!-- Chart Circle -->
+	<script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
+
+	<!-- Datatables -->
+	<script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+
+	<!-- Bootstrap Notify -->
+	<script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+	<!-- jQuery Vector Maps -->
+	<script src="../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+	<script src="../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+	<!-- Sweet Alert -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	<!-- Atlantis JS -->
+	<script src="../assets/js/atlantis.min.js"></script>
+	
+	<script src="../../assets/js/main.js"></script>
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -297,7 +338,7 @@ if($profpic==''){
 						</div>
 						<div class="info text-dark">
 								<b><?= $_SESSION['username']; ?></b><br>
-								<small>Administrator</small>
+								<small>Supplier</small>
 							<div class="clearfix"></div>
 
 							<div class="collapse in" id="collapseExample">
@@ -328,26 +369,17 @@ if($profpic==''){
 								<p>Dashboard</p>
 							</a>
 						</li>
-						<li class="nav-item <?php if($page=='Akun'){echo 'active'; } ?>">
-							<a data-toggle="collapse" href="#akun" class="collapsed" aria-expanded="false">
-								<i class="fas fa-users"></i>
-								<p>Data Akun</p>
-								<span class="caret"></span>
+						<li class="nav-item <?php if($page=='Stok'){echo 'active'; } ?>">
+							<a href="stok.php" >
+								<i class="fas fa-box-open"></i>
+								<p>Stok</p>
 							</a>
-							<div class="collapse" id="akun">
-								<ul class="nav nav-collapse">
-									<li>
-										<a href="admin.php">
-											<span class="sub-item">Admin</span>
-										</a>
-									</li>
-									<li>
-										<a href="supplier.php">
-											<span class="sub-item">Supplier</span>
-										</a>
-									</li>
-								</ul>
-							</div>
+						</li>
+						<li class="nav-item <?php if($page=='Permintaan'){echo 'active'; } ?>">
+							<a href="permintaan.php" >
+								<i class="fas fa-hand-holding"></i>
+								<p>Permintaan</p>
+							</a>
 						</li>
 					</ul>
 				</div>

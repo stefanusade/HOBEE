@@ -80,7 +80,20 @@ if(isset($_POST['admin'])){
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
   </head>
+ 	
   <body class="bg-primary">
+    <?php
+    	if(!empty($_GET['alert'])){
+    		$alert = $_GET['alert'];
+        	if($alert=='invalidpass'){
+            	echo "<script>Swal.fire({title: 'Gagal',text: 'Password yang anda masukkan salah',icon: 'error',confirmButtonText: 'OK'})</script>";
+        	}elseif($alert=='nouser'){
+            	echo "<script>Swal.fire({title: 'Gagal',text: 'Akun pengguna tidak ditemukan',icon: 'error',confirmButtonText: 'OK'})</script>";
+        	}elseif($alert=='incomplete'){
+            	echo "<script>Swal.fire({title: 'Gagal',text: 'Form belum terisi lengkap',icon: 'error',confirmButtonText: 'OK'})</script>";
+        	}
+		}
+    ?>
         <div class="container my-5">
             <div class="row">
                 <div class="col-lg-6 col-md-8 mx-auto">

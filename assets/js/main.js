@@ -14,13 +14,21 @@ $(document).ready(function() {
 
 $(document).ready(function(){
     $("#history").hide();
+    $("#profile").hide();
+    $("#btn-dashboard").click(function(){
+        $("#dashboard").show();
+        $("#profile").hide();
+        $("#history").hide();
+    });
     $("#btn-profile").click(function(){
+        $("#dashboard").hide();
         $("#profile").show();
         $("#history").hide();
     });
     $("#btn-history").click(function(){
-        $("#history").show();
+        $("#dashboard").hide();
         $("#profile").hide();
+        $("#history").show();
     });
 });
 
@@ -39,8 +47,4 @@ $(document).ready(function(){
         $("#link-supplier").addClass('active');
         $("#link-admin").removeClass('active');
     });
-});
-$(document).ready(function() {
-	$('#basic-datatables').DataTable({
-	});
 });

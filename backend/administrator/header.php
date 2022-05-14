@@ -8,9 +8,10 @@ if($_SESSION['role']!=1){
 }
 include "../../config/db.php";
 $username = $_SESSION['username'];
-$cust = mysqli_query($conn,"SELECT c.nama_customer AS nama, c.email AS email, c.no_jalan AS no, c.nama_jalan AS jalan, k.nama_kota AS kota FROM customer c, kota k WHERE c.id_kota=k.id_kota");
-$supp = mysqli_query($conn,"SELECT s.nama_supplier AS nama, s.email AS email, s.no_jalan AS no, s.nama_jalan AS jalan, k.nama_kota AS kota FROM supplier s, kota k WHERE s.id_kota=k.id_kota");
-$adm = mysqli_query($conn,"SELECT a.nama_admin AS nama, a.email AS email, a.no_jalan AS no, a.nama_jalan AS jalan, k.nama_kota AS kota FROM admin a, kota k WHERE a.id_kota=k.id_kota");
+$cust = mysqli_query($conn,"SELECT c.id_customer AS id, c.nama_customer AS nama, c.email AS email, c.no_jalan AS no, c.nama_jalan AS jalan, k.nama_kota AS kota FROM customer c, kota k WHERE c.id_kota=k.id_kota");
+$supp = mysqli_query($conn,"SELECT s.id_supplier AS id, s.nama_supplier AS nama, s.email AS email, s.no_jalan AS no, s.nama_jalan AS jalan, k.nama_kota AS kota FROM supplier s, kota k WHERE s.id_kota=k.id_kota");
+$adm = mysqli_query($conn,"SELECT a.id_admin AS id, a.nama_admin AS nama, a.email AS email, a.no_jalan AS no, a.nama_jalan AS jalan, k.nama_kota AS kota FROM admin a, kota k WHERE a.id_kota=k.id_kota");
+$edu = mysqli_query($conn,"SELECT e.id_edukasi AS id, a.nama_admin AS author, e.judul AS judul, e.tgl_post AS tgl FROM edukasi e, admin a WHERE a.id_admin=e.id_admin");
 $me = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM admin WHERE username = '$username'"));
 $profpic = $me['foto_profil'];
 if($profpic==''){
@@ -46,6 +47,54 @@ if($profpic==''){
 	<link rel="stylesheet" href="../assets/css/demo.css">
 </head>
 <body>
+    
+    <!--   Core JS Files   -->
+	<script src="../assets/js/core/jquery.3.2.1.min.js"></script>
+	<script src="../assets/js/core/popper.min.js"></script>
+	<script src="../assets/js/core/bootstrap.min.js"></script>
+
+	<!-- jQuery UI -->
+	<script src="../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
+	<script src="../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
+
+	<!-- jQuery Scrollbar -->
+	<script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
+
+
+	<!-- Chart JS -->
+	<script src="../assets/js/plugin/chart.js/chart.min.js"></script>
+
+	<!-- jQuery Sparkline -->
+	<script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
+
+	<!-- Chart Circle -->
+	<script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
+
+	<!-- Datatables -->
+	<script src="../assets/js/plugin/datatables/datatables.min.js"></script>
+
+	<!-- Bootstrap Notify -->
+	<script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
+
+	<!-- jQuery Vector Maps -->
+	<script src="../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
+	<script src="../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
+
+	<!-- Sweet Alert -->
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	<!-- Atlantis JS -->
+	<script src="../assets/js/atlantis.min.js"></script>
+	
+	<script src="../../assets/js/main.js"></script>
+	<script >
+		$(document).ready(function() {
+			$('#basic-datatables').DataTable();
+		});
+	</script>
+
 	<div class="wrapper">
 		<div class="main-header">
 			<!-- Logo Header -->
@@ -350,6 +399,33 @@ if($profpic==''){
 									<li>
 										<a href="customer.php">
 											<span class="sub-item">Customer</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="nav-item <?php if($page=='Edukasi'){echo 'active'; } ?>">
+							<a href="edukasi.php" >
+								<i class="fas fa-graduation-cap"></i>
+								<p>Edukasi</p>
+							</a>
+						</li>
+                        <li class="nav-item <?php if($page=='Stok'){echo 'active'; } ?>">
+							<a data-toggle="collapse" href="#stok" class="collapsed" aria-expanded="false">
+								<i class="fas fa-box-open"></i>
+								<p>Stok Supplier</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="stok">
+								<ul class="nav nav-collapse">
+									<li>
+										<a href="stok.php">
+											<span class="sub-item">Data Stok</span>
+										</a>
+									</li>
+									<li>
+										<a href="permintaan.php">
+											<span class="sub-item">Data Permintaan</span>
 										</a>
 									</li>
 								</ul>

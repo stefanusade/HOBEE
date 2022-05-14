@@ -22,46 +22,62 @@ if(isset($_POST['submit'])){
         $kota = $_POST['kota'];
         $pass = $_POST['pass'];
         $konfpass = $_POST['konfpass'];
-        if($pass==$konfpass){
-            include "./config/mail.php";
-            $options = [
-                'cost' => 10,
-            ];
-            $hash = password_hash($pass, PASSWORD_BCRYPT, $options);
-            $simpan = mysqli_query($conn,"INSERT INTO customer 
-            (nama_customer,id_jenis_kelamin,tanggal_lahir,no_jalan,nama_jalan,id_kota,no_hp,no_ktp,no_rekening,
-            username,email,password) VALUES ('$nama','$jenis_kelamin','$tgl_lahir','$no_rumah','$alamat','$kota','$no_hp','$nik','$norek','$username','$email','$hash')");
-            if($simpan){
-                $kode = rand(100000,999999);
-                $_SESSION['verify'] = $email;
-                $mail->addAddress($email, $nama);
-                $mail->isHTML(true);                                  
-                $mail->Subject = "Kode Verifikasi HOBEE $username";
-                $mail->Body    = "
-                    <h1>Kode Verifikasi HOBEE</h1>
-                    <hr>
-                    Berikut ini kode verifikasi akun Anda:
-                    <h2><b>$kode</b></h2>
-                    <hr>
-                    Segera masukkan kode ke dalam form verifikasi. Kode hanya berlaku untuk 3 menit.
-                ";
-                $mail->send();
-                $plus3m = date('Y-m-d H:i:s',strtotime('+3mins'));
-                $verify = mysqli_query($conn,"INSERT INTO verifikasi_user 
-                (email,kode,waktu) VALUES ('$email','$kode','$plus3m')");
-                if($verify){
-                    header("Location:verify.php");
+        $check = mysqli_query($conn,"SELECT * FROM customer WHERE username='$username' OR email='$email' OR no_hp='$no_hp'");
+        if(mysqli_num_rows($check)>0){
+            header("Location:register.php?alert=registered");
+        }else{
+            if($pass==$konfpass){
+                include "./config/mail.php";
+                $options = ['cost' => 10,];
+                $hash = password_hash($pass, PASSWORD_BCRYPT, $options);
+                $simpan = mysqli_query($conn,"INSERT INTO customer 
+                (nama_customer,id_jenis_kelamin,tanggal_lahir,no_jalan,nama_jalan,id_kota,no_hp,no_ktp,no_rekening,
+                username,email,password) VALUES ('$nama','$jenis_kelamin','$tgl_lahir','$no_rumah','$alamat','$kota','$no_hp','$nik','$norek','$username','$email','$hash')");
+                if($simpan){
+                    $kode = rand(100000,999999);
+                    $_SESSION['verify'] = $email;
+                    $subject = "Kode Verifikasi HOBEE $username";
+                    $body = "
+                        <h1>Kode Verifikasi HOBEE</h1>
+                        <hr>
+                        Berikut ini kode verifikasi akun Anda:
+                        <h2><b>$kode</b></h2>
+                        <hr>
+                        Segera masukkan kode ke dalam form verifikasi. Kode hanya berlaku untuk 3 menit.
+                    ";
+                    mail($email,$subject,$body,$headers);
+                    $plus3m = date('Y-m-d H:i:s',strtotime('+3mins'));
+                    $verify = mysqli_query($conn,"INSERT INTO verifikasi_user 
+                    (email,kode,waktu) VALUES ('$email','$kode','$plus3m')");
+                    if($verify){
+                        header("Location:verify.php");
+                    }else{
+                        header("Location:register.php?alert=server-error");
+                    } 
                 }else{
                     header("Location:register.php?alert=server-error");
-                } 
+                }   
             }else{
-                header("Location:register.php?alert=server-error");
-            }   
-        }else{
-            header("Location:register.php?alert=passnomatch");
-        }
+                header("Location:register.php?alert=passnomatch");
+            }
+        }  
     }else{
         header("Location:register.php?alert=incomplete");
+    }
+}
+
+// alert
+
+if(!empty($_GET['alert'])){
+    $alert = $_GET['alert'];
+    if($alert=='incomplete'){
+        echo "<script>Swal.fire({title: 'Gagal Daftar!',text: 'Form Tidak Lengkap',icon: 'error',confirmButtonText: 'Coba Lagi'})</script>";
+    }elseif($alert=='registered'){
+        echo "<script>Swal.fire({title: 'Gagal Daftar!',text: 'Email/Nomor Handphone/Username sudah terdaftar',icon: 'error',confirmButtonText: 'Coba Lagi'})</script>";
+    }elseif($alert=='passnomatch'){
+        echo "<script>Swal.fire({title: 'Gagal Daftar!',text: 'Password Tidak Cocok',icon: 'error',confirmButtonText: 'Coba Lagi'})</script>";
+    }elseif($alert=='server-error'){
+        echo "<script>Swal.fire({title: 'Server Error!',text: 'Terjadi galat pada server',icon: 'error',confirmButtonText: 'Coba Lagi'})</script>";
     }
 }
 ?>
@@ -78,15 +94,15 @@ if(isset($_POST['submit'])){
                 <div class="row mt-3">
                     <div class="col-md-6">
                         <label class="mt-3" for="nama">Nama Lengkap <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Lengkap" required>
+                        <input type="text" class="form-control" name="nama" id="nama" placeholder="Nama Lengkap" maxlength="20" required>
                     </div>
                     <div class="col-md-6">
                         <label class="mt-3" for="username">Username <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="username" id="username" placeholder="Username" required>
+                        <input type="text" class="form-control" name="username" id="username" placeholder="Username" maxlength="10" required>
                     </div>
                     <div class="col-md-6">
                         <label class="mt-3" for="no_hp">Nomor Handphone <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="no_hp" id="no_hp" placeholder="Nomor Handphone" required>
+                        <input type="text" class="form-control numeric" name="no_hp" id="no_hp" placeholder="Nomor Handphone" maxlength="13" required>
                     </div>
                     <div class="col-md-6">
                         <label class="mt-3" for="email">Email <span class="text-danger">*</span></label>
@@ -94,15 +110,15 @@ if(isset($_POST['submit'])){
                     </div>
                     <div class="col-md-6">
                         <label class="mt-3" for="nik">NIK <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="nik" id="nik" placeholder="Nomor Induk Kependudukan" required>
+                        <input type="text" class="form-control numeric" name="nik" id="nik" placeholder="Nomor Induk Kependudukan" maxlength="16" required>
                     </div>
                     <div class="col-md-6">
                         <label class="mt-3" for="norek">Nomor Rekening <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="norek" id="norek" placeholder="Nomor Rekening Bank" required>
+                        <input type="text" class="form-control numeric" name="norek" id="norek" placeholder="Nomor Rekening Bank" maxlength="13" required>
                     </div>
                     <div class="col-md-6">
                         <label class="mt-3" for="jk">Jenis Kelamin <span class="text-danger">*</span></label>
-                        <select type="text" class="form-select" name="jenis_kelamin" id="jk" placeholder="Nomor Handphone" required>
+                        <select type="text" class="form-select" name="jenis_kelamin" id="jk" placeholder="Jenis Kelamin" required>
                             <option selected>Pilih Salah Satu</option>
                             <option value="1">Laki-Laki</option>
                             <option value="2">Perempuan</option>
@@ -144,12 +160,52 @@ if(isset($_POST['submit'])){
                         <input type="password" class="form-control" name="konfpass" id="konfpass" placeholder="Password">   
                     </div>
                 </div>
-                <input type="submit" class="form-control btn btn-primary mt-3" name="submit" value="DAFTAR">
+                <input type="submit" class="form-control btn btn-primary mt-3" name="submit" id="submit" value="DAFTAR">
                 
             </form>
             <p class="mt-3 mb-3">Sudah punya akun? <a href="login.php">Masuk</a></p>
         </div>  
     </div>
 </div>
+<script>
+    $("#submit").click(function(){
+        var nama = $("#nama").val();
+        var username = $("#username").val();
+        var email = $("#email").val();
+        var no_hp = $("#no_hp").val();
+        var nik = $("#nik").val();
+        var norek = $("#norek").val();
+        var jk = $("#jk").val();
+        var tl = $("#tl").val();
+        var alamat = $("#alamat").val();
+        var no_rumah = $("#no_rumah").val();
+        var kota = $("#kota").val();
+        
+        if(nama==''||username==''||email==''||no_hp==''||nik==''){
+            Swal.fire({
+                title:'Form Belum Lengkap',
+                text:'Mohon periksa kembali bidang yang belum terisi',
+                icon:'warning',
+                button:'OK',
+            });
+        }
+    })
+    $(".numeric").keyup(function(){
+        var numonly = $(this).val();
+        var key = event.keyCode || event.charCode;
+        if( key != 8 || key != 46 ){
+            if(numonly != ''){
+                if(!$.isNumeric(numonly)){
+                    Swal.fire({
+                        title: 'Input Tidak Sesuai',
+                        text:'Input hanya boleh terdiri atas angka 0-9',
+                        icon:'warning',
+                        button:'OK',
+                    });
+                }
+            }   
+        }
+    })
+</script>
 
 <?php include "footer.php";?>

@@ -26,6 +26,17 @@ if(isset($_POST['verify'])){
         header('Location:verify.php?alert=wrong-otp');
     }
 }
+
+// alert
+
+if(!empty($_GET['alert'])){
+    $alert = $_GET['alert'];
+    if($alert=='server-error'){
+        echo "<script>Swal.fire({title: 'Server Error!',text: 'Terjadi galat pada server',icon: 'error',confirmButtonText: 'Coba Lagi'})</script>";
+    }elseif($alert=='wrong-otp'){
+        echo "<script>Swal.fire({title: 'OTP Salah!',text: 'Kode OTP yang anda masukkan tidak sesuai',icon: 'error',confirmButtonText: 'Coba Lagi'})</script>";
+    }
+}
 ?>
 
 <div class="container my-5 mx-2">

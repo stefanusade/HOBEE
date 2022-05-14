@@ -12,6 +12,12 @@ if(!isset($_SESSION['login'])){
         include "../config/db.php";
         $user = mysqli_query($conn,"SELECT * FROM customer WHERE username = '$username'");
         $u = mysqli_fetch_assoc($user);
+        $idjk = $u['id_jenis_kelamin'];
+        $idk = $u['id_kota'];
+        $jk = mysqli_query($conn,"SELECT * FROM jenis_kelamin WHERE id_jenis_kelamin='$idjk'");
+        $j = mysqli_fetch_assoc($jk);
+        $kota = mysqli_query($conn,"SELECT * FROM kota WHERE id_kota = '$idk'");
+        $k = mysqli_fetch_assoc($kota);
         $foto = $u['foto_profil'];
         if(empty($foto)){
             $foto = 'sample.jpg';
@@ -27,6 +33,7 @@ if(!isset($_SESSION['login'])){
     <meta name="description" content="">
     <title><?= "HOBEE - ".$page; ?></title>
     <!-- stylesheet -->
+    <link rel="icon" href="../assets/img/Logo.png" type="image/png">
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
     <link href="../assets/css/style.css?v=<?= date('Y-m-d H:i'); ?>" rel="stylesheet">
     <link href="../assets/css/headers.css" rel="stylesheet">
@@ -49,14 +56,14 @@ if(!isset($_SESSION['login'])){
   
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
           <li><a href="../index.php" class="nav-link px-2 link-secondary">Beranda</a></li>
-          <li><a href="#" class="nav-link px-2 link-dark">Edukasi</a></li>
+          <li><a href="../edukasi.php" class="nav-link px-2 link-dark">Edukasi</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">Toko</a></li>
           <li><a href="#" class="nav-link px-2 link-dark">Tentang</a></li>
         </ul>
   
         <div class="col-md-3 text-end">
           <a class="text-dark mx-3" href="cart.php"><i class="fas fa-shopping-cart"></i></a>
-          <a  class="me-2" href="index.php"><img src="../assets/uploads/profile/<?=$foto;?>" style="height:40px; border-radius:50px; border:1px solid black"></a>
+          <a  class="me-2" href="index.php"><img src="../assets/uploads/profile/<?=$foto;?>" class="profpic-sm"></a>
           <a class="text-danger ml-3" href="../logout.php"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
 
         </div>

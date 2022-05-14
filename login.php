@@ -71,14 +71,16 @@ if(!empty($_GET['alert'])){
         echo "<script>Swal.fire({title: 'Gagal Login!',text: 'Akun Pengguna Tidak Ditemukan',icon: 'error',confirmButtonText: 'Coba Lagi'})</script>";
     }elseif($alert=='invalidpass'){
         echo "<script>Swal.fire({title: 'Gagal Login!',text: 'Password Yang Anda Masukkan Salah',icon: 'error',confirmButtonText: 'Coba Lagi'})</script>";
+    }elseif($alert=='register-success'){
+        echo "<script>Swal.fire({title: 'Pendaftaran Berhasil!',text: 'Akun berhasil diverifikasi.',icon: 'success',confirmButtonText: 'OK'})</script>";
     }
 }
 ?>
 <div class="container my-5 px-3">
     <div class="row">
         <div class="col-lg-9 mx-auto">
-            <div class="row shadow border" style="border-radius:15px">
-                <div class="col-md-6 mx-auto hide-mobile align-items-center text-white bg-primary py-5 px-3" style="border-radius:15px 0px 0px 15px">
+            <div class="row bg-transparent-dark text-white shadow border mb-3" style="border-radius:15px">
+                <div class="col-md-6 mx-auto hide-mobile align-items-center text-white py-5 px-3" style="border-radius:15px 0px 0px 15px">
                     
                 </div>
                 <div class="col-md-6 py-5 px-5 mx-auto">
@@ -95,14 +97,14 @@ if(!empty($_GET['alert'])){
                                 <label for="pass">Password</label>
                             </div>
                         </div>
-                        <input class="form-control btn btn-lg btn-primary" type="submit" name="login" value="Masuk"/>
+                        <input class="form-control btn btn-lg btn-warning" type="submit" name="login" value="Masuk"/>
                     </form>
                     <p class="my-3">Belum punya akun? <a href="register.php">Daftar Sekarang!</a></p>
                 </div>  
             </div>        
         </div>
     </div>
-    
+    <center><a class="text-white" href="./backend">Login Sebagai Admin/Supplier</a></center>
 </div>
 
 <?php include "footer.php";?>

@@ -1,15 +1,27 @@
 <?php 
 $page = 'Halaman Customer';
 include "header.php"; 
-$daftar_kota = mysqli_query($conn,"SELECT * FROM kota");
+
+// alert
+
+if(!empty($_GET['alert'])){
+    $alert = $_GET['alert'];
+    if($alert=='success'){
+        echo "<script>Swal.fire({title: 'Ubah Data Akun Berhasil!',text: 'Berhasil mengubah data akun',icon: 'success',confirmButtonText: 'OK'})</script>";
+    }
+}
 ?>
 
 <div class="container-fluid bg-success text-white text-center p-5">
-    <img src="../assets/uploads/profile/<?=$foto;?>" style="height:100px; border-radius:60px; border:3px solid white">
-    <h3 class="mt-3"><?= $u['nama_customer']; ?>
+    <a href="profpic.php"><img src="../assets/uploads/profile/<?=$foto;?>" class="profpic"></a>
+    <h3 class="mt-3"><?= $u['username']; ?>
 </div>
 <div class="container">
     <div class="row bg-warning text-center rounded shadow p-3" style="margin-top:-25px">
+        <div class="col-3 col-link" id="btn-dashboard">
+            <h3><i class="fa-solid fa-house-user"></i></h3>
+            <small>Dasbor</small>
+        </div>
         <div class="col-3 col-link" id="btn-profile">
             <h3><i class="fa-solid fa-user"></i></h3>
             <small>Akun</small>
@@ -22,79 +34,76 @@ $daftar_kota = mysqli_query($conn,"SELECT * FROM kota");
             <h3><i class="fa-solid fa-clock-rotate-left"></i></h3>
             <small>Riwayat</small>
         </div>
-        <div class="col-3 col-link" id="btn-profile">
-            <h3><i class="fa-solid fa-clock-rotate-left"></i></h3>
-            <small>Riwayat</small>
+    </div>
+    <div class="my-5 p-3" id="dashboard">
+        <h2>Dashboard</h2>
+        
+    </div>
+    <div class="my-5 p-3" id="profile">
+        <div class="d-flex bd-highlight justify-content-center mb-5">
+          <div class="bd-highlight"><h2 class="m-0" style="line-height:1">Akun</h2></div>
+          <div class="ms-auto bd-highlight"><a class="btn btn-sm btn-warning" href="akun.php">EDIT</a></div>
+        </div>
+        <h3>Informasi Pribadi</h3>
+        <div class="table-responsive mb-5">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Nama</th>
+                        <td><?= $u['nama_customer']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Username</th>
+                        <td><?= $u['username']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td><?= $u['email']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>No. Handphone</th>
+                        <td><?= $u['no_hp']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>NIK</th>
+                        <td><?= $u['no_ktp']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Nomor Rekening</th>
+                        <td><?= $u['no_rekening']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Jenis Kelamin</th>
+                        <td><?= $j['jenis_kelamin']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Tanggal Lahir</th>
+                        <td><?= date('d M Y',strtotime($u['tanggal_lahir'])); ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>Alamat</h3>
+        <div class="table-responsive">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <th>Jalan</th>
+                        <td><?= $u['nama_jalan']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>No. Jalan</th>
+                        <td><?= $u['no_jalan']; ?></td>
+                    </tr>
+                    <tr>
+                        <th>Kota/Kab.</th>
+                        <td><?= $k['nama_kota']; ?></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-    <div class="my-5" id="profile">
-        <h2 class="mb-5">Akun</h2>
-            <form method="POST" action="./edit/akun.php">
-                <h4>Identitas Pribadi</h4>
-                <div class="row mb-5">
-                    <div class="col-md-6">
-                        <label class="mt-3" for="nama">Nama Lengkap <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="nama" id="nama" value="<?= $u['nama_customer']; ?>" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="mt-3" for="username">Username <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="username" id="username" value="<?= $u['username']; ?>" disabled required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="mt-3" for="email">Email <span class="text-danger">*</span></label>
-                        <input type="email" class="form-control" name="email" id="email" value="<?= $u['email']; ?>" disabled required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="mt-3" for="no_hp">Nomor Handphone <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="no_hp" id="no_hp" value="<?= $u['no_hp']; ?>" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="mt-3" for="nik">Nomor Induk Kependudukan <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="nik" id="nik" value="<?= $u['no_ktp']; ?>" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="mt-3" for="norek">Nomor Rekening <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="norek" id="norek" value="<?= $u['no_rekening']; ?>" required>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="mt-3" for="jk">Jenis Kelamin <span class="text-danger">*</span></label>
-                        <select type="text" class="form-select" name="jenis_kelamin" id="jk" placeholder="Nomor Handphone" required>
-                            <option value="1" <?php if($u['id_jenis_kelamin']==1){ echo "selected";} ?>>Laki-Laki</option>
-                            <option value="2" <?php if($u['id_jenis_kelamin']==2){ echo "selected";} ?>>Perempuan</option>
-                        </select>
-                    </div>
-                    <div class="col-md-6">
-                        <label class="mt-3" for="tl">Tanggal Lahir <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" name="tgl_lahir" id="tl" value="<?= $u['tanggal_lahir']; ?>" required>
-                    </div>
-                </div>
-                <h4>Alamat</h4>
-                <div class="row">
-                    <div class="col-md-6">
-                        <label class="mt-3" for="alamat">Alamat Lengkap <span class="text-danger">*</span></label>
-                        <div class="row g-2">
-                            <div class="col-8">
-                                <input type="text" class="form-control" name="alamat" id="alamat" value="<?= $u['nama_jalan']; ?>" required>
-                            </div>
-                            <div class="col-4">
-                                <input type="text" class="form-control" name="no_rumah" id="no_rumah" value="<?= $u['no_jalan']; ?>" required>
-                            </div>
-                        </div>  
-                    </div>
-                    <div class="col-md-6">
-                        <label class="mt-3" for="select-data">Kota <span class="text-danger">*</span></label>
-                        <select class="form-select" name="kota" id="select-data">
-                            <option selected>Pilih Kota</option>
-                            <?php while($k = mysqli_fetch_assoc($daftar_kota)):?>
-                            <option value="<?= $k['id_kota'];?>" <?php if($u['id_kota']==$k['id_kota']){ echo "selected";} ?>><?= $k['nama_kota'];?></option>
-                            <?php endwhile; ?>
-                        </select>
-                    </div>
-                </div>
-                <input type="submit" class="form-control btn btn-primary mt-3" name="submit" value="UBAH PROFIL">
-        </form>
-    </div>
-    <div class="my-5" id="history">
+    <div class="my-5 p-3" id="history">
         <h2>Riwayat Transaksi</h2>
     </div>
 </div>

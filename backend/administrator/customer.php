@@ -38,6 +38,7 @@ include "header.php"; ?>
 											<th>Nama</th>
 											<th>Email</th>
 											<th>Alamat</th>
+											<th>Aksi</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -51,6 +52,11 @@ include "header.php"; ?>
 										                <td>$d[nama]</td>
 										                <td>$d[email]</td>
 										                <td>$alamat</td>
+										                <td>
+										                <form action='details.php' method='POST'>
+										                <input type='hidden' name='role' value='customer'/>
+										                <button class='btn btn-sm btn-primary' type='submit' name='lihat' value='$d[id]'><i class='fas fa-eye'></i></button>
+										                </form></td>
 										            </tr>
 										        ";
 										        $i++;

@@ -29,8 +29,9 @@ a {
   cursor: pointer;
 }
 .hero {
-  min-height: 95vh;
+  min-height: 90vh;
   display: flex;
+  z-index:0;
 }
 .text-line {
     background-color: transparent;
@@ -70,4 +71,64 @@ a {
 /* Firefox */
 .text-line{
   -moz-appearance: textfield;
+}
+.navbar-guest{
+    background-color: rgba(255,255,255,0.15);
+    box-shadow: 0px 4px 37px 5px rgba(0, 0, 0, 0.25);
+    z-index: 999;
+    border-radius: 0px 0px 10px 10px;
+}
+.bg-transparent-dark{
+    background-color: rgba(0,0,0,0.45);
+}
+.btn-navbar{
+    padding: 8px 15px;
+    background-color: rgba(0,0,0,0.20);
+    color: white;
+    text-decoration: none;
+    border-radius: 100px;
+}
+.btn-navbar:hover{
+    background-color: rgba(0,0,0,0.30);
+    color: white;
+}
+.pic-overlay{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #000000;
+}
+.pic-overlay:hover{
+    opacity: 0.6;
+}
+.text-overlay {
+  color: white;
+  font-size: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+.profpic{
+    height:100px; 
+    width:100px;
+    object-fit: cover;
+    border-radius:60px; 
+    border:3px solid white;
+}
+.profpic-sm{
+    height:40px; 
+    width:40px;
+    object-fit: cover;
+    border-radius:30px; 
+    border:1px solid black;
 }

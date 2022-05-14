@@ -1,44 +1,33 @@
-	<!--   Core JS Files   -->
-	<script src="../assets/js/core/jquery.3.2.1.min.js"></script>
-	<script src="../assets/js/core/popper.min.js"></script>
-	<script src="../assets/js/core/bootstrap.min.js"></script>
+    <footer class="bg-secondary">
+        <div class="container py-4 text-white">
+            <div class="row mx-2">
+                <div class="col-md-6 col-lg-4 my-3">
+                    <h2><b>Madu Samsi</b></h2>
+                    <hr class="line-10">
+                    <p>Wonosalam, Jombang</p>
+                </div>
+                <div class="col-md-6 col-lg-4 my-3">
+                    <h5><b>SITEMAP</b></h5>
+                    <hr class="line-10">
+                    <a class="text-white" href="../../index.php">Beranda</a><br>
+                    <a class="text-white" href="../../edukasi.php">Edukasi</a><br>
+                    <a class="text-white" href="../../toko.php">Toko</a><br>
+                    <a class="text-white" href="../../customer">Pelanggan</a><br>
+                    <a class="text-white" href="../../backend">Admin dan Supplier</a><br>
+                </div>
+                <div class="col-md-6 col-lg-4 my-3">
+                    <h5><b>MEDIA SOSIAL</b></h5>
+                    <hr class="line-10">
+                    <p>Tagline Madu Samsi</p>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-dark text-center text-white py-3">
+            <p>Madu Samsi. <?= $year; ?></p>
+        </div>
+    </footer>
 
-	<!-- jQuery UI -->
-	<script src="../assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js"></script>
-	<script src="../assets/js/plugin/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js"></script>
 
-	<!-- jQuery Scrollbar -->
-	<script src="../assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js"></script>
-
-
-	<!-- Chart JS -->
-	<script src="../assets/js/plugin/chart.js/chart.min.js"></script>
-
-	<!-- jQuery Sparkline -->
-	<script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
-
-	<!-- Chart Circle -->
-	<script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
-
-	<!-- Datatables -->
-	<script src="../assets/js/plugin/datatables/datatables.min.js"></script>
-
-	<!-- Bootstrap Notify -->
-	<script src="../assets/js/plugin/bootstrap-notify/bootstrap-notify.min.js"></script>
-
-	<!-- jQuery Vector Maps -->
-	<script src="../assets/js/plugin/jqvmap/jquery.vmap.min.js"></script>
-	<script src="../assets/js/plugin/jqvmap/maps/jquery.vmap.world.js"></script>
-
-	<!-- Sweet Alert -->
-	<script src="../assets/js/plugin/sweetalert/sweetalert.min.js"></script>
-	
-	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-
-	<!-- Atlantis JS -->
-	<script src="../assets/js/atlantis.min.js"></script>
-	
-	<script src="../../assets/js/main.js"></script>
 	<script >
 		$(document).ready(function() {
 			$('#basic-datatables').DataTable({

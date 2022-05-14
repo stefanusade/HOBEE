@@ -39,6 +39,18 @@ include "header.php"; ?>
 								</div>
 							</div>
 						</div>
+						<div class="col-sm-6 col-lg-3">
+							<div class="card p-3">
+								<div class="d-flex align-items-center">
+									<span class="stamp stamp-md bg-danger mr-3">
+										<i class="fa fa-graduation-cap"></i>
+									</span>
+									<div>
+										<h5 class="mb-1"><b><a href="edukasi.php"><?= mysqli_num_rows($edu); ?> <small>Edukasi</small></a></b></h5>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
