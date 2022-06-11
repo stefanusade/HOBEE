@@ -11,7 +11,7 @@
                     <hr class="line-10">
                     <a class="text-white" href="../index.php">Beranda</a><br>
                     <a class="text-white" href="../edukasi.php">Edukasi</a><br>
-                    <a class="text-white" href="../toko.php">Toko</a><br>
+                    <a class="text-white" href="../katalog.php">Katalog</a><br>
                     <a class="text-white" href="../customer">Pelanggan</a><br>
                     <a class="text-white" href="../backend">Admin dan Supplier</a><br>
                 </div>

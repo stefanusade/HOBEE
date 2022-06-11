@@ -39,7 +39,7 @@ WHERE p.id_supplier=s.id_supplier AND p.id_permintaan='$id'"));
     			<div class="col-md-12">
     				<div class="card">
     					<div class="card-body py-3">
-    					    <a href="stok.php" class="btn btn-danger">BATAL UBAH</a> 
+    					    <a href="stok.php" class="btn btn-danger">BATAL</a> 
     					    <form action="./edit/permintaan.php" method="post">
     					        <div class="row mt-3">
     					            <div class="col-6">
@@ -69,14 +69,14 @@ WHERE p.id_supplier=s.id_supplier AND p.id_permintaan='$id'"));
     					            </div>
     					            <div class="col-6 mt-3">
     					                <label for="tglt">Tanggal Diterima</label>
-                                        <input class="form-control" type="date" name="tgl" id="tgl" value="<?= $s['tanggal_diterima']; ?>"  required>
+                                        <input class="form-control" type="date" name="tgl" id="tgl" value="<?= $s['tanggal_diterima']; ?>" >
     					            </div>
     					        </div>
         					    <div class="mt-3">
     					            <label for="link">Keterangan</label>
         					        <textarea class="ckeditor" id="ket" name="ket" required><?= $s['keterangan']; ?></textarea>
     					        </div>
-    					        <input class="btn btn-primary form-control my-3" type="submit" name="submit" id="submit" value="UBAH PERMINTAAN">
+    					        <input class="btn btn-primary btn-block my-3" type="submit" name="submit" id="submit" value="SIMPAN">
                             </form>
     					</div>
     				</div>
@@ -88,8 +88,7 @@ WHERE p.id_supplier=s.id_supplier AND p.id_permintaan='$id'"));
 <script>
     $("#submit").click(function(){
         var rincian = $("#rincian").val();
-        var tgl = $("#tgl").val();
-        if(rincian==''||tgl==''){
+        if(rincian==''){
             Swal.fire({
                 title:'Form Belum Lengkap',
                 text:'Mohon periksa kembali bidang yang belum terisi',

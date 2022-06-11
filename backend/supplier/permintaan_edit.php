@@ -39,7 +39,7 @@ WHERE p.id_supplier=s.id_supplier AND p.id_permintaan='$id'"));
     			<div class="col-md-12">
     				<div class="card">
     					<div class="card-body py-3">
-    					    <a href="stok.php" class="btn btn-danger">BATAL UBAH</a> 
+    					    <a href="permintaan.php" class="btn btn-danger">BATAL</a> 
     					    <form action="./edit/permintaan.php" method="post">
     					        <div class="row mt-3">
     					            <div class="col-6">
@@ -53,30 +53,33 @@ WHERE p.id_supplier=s.id_supplier AND p.id_permintaan='$id'"));
     					            </div>
     					            <div class="col-12 mt-3">
             					        <label for="rincian">Rincian</label>
-                                        <input class="form-control" type="text" name="rincian" id="rincian" value="<?= $s['rincian_permintaan']; ?>"  required>
+                                        <p class="m-2"><?= $s['rincian_permintaan']; ?></p>
             					    </div> 
             					    <div class="col-6 mt-3">
             					        <label for="qty">Kuantitas</label>
-                                        <input class="form-control" type="number" name="qty" id="qty" value="<?= $s['kuantitas']; ?>"  required>
+                                        <p class="m-2"><?= $s['kuantitas']; ?></p>
             					    </div>
             					    <div class="col-6 mt-3">
     					                <label for="tgl">Tanggal Permintaan</label>
-        					            <p class="m-2"><strong><?= $s['tanggal_permintaan']; ?></strong></p>
+        					            <p class="m-2"><strong><?= date('d/m/Y',strtotime($s['tanggal_permintaan'])); ?></strong></p>
     					            </div>
             					    <div class="col-6 mt-3">
     					                <label for="tglk">Tanggal Dikirim</label>
-        					            <p class="m-2"><strong><?= $s['tanggal_kirim']; ?></strong></p>
+                                        <input class="form-control" type="date" name="tgl" id="tgl" value="<?= $s['tanggal_kirim']; ?>"  required>
     					            </div>
     					            <div class="col-6 mt-3">
     					                <label for="tglt">Tanggal Diterima</label>
-                                        <input class="form-control" type="date" name="tgl" id="tgl" value="<?= $s['tanggal_diterima']; ?>"  required>
+                                        <p class="m-2"><strong><?php
+                                        if(!empty($s['tanggal_diterima'])){
+                                            echo date('d/m/Y',strtotime($s['tanggal_diterima'])); 
+                                        } ?></strong></p>
     					            </div>
     					        </div>
         					    <div class="mt-3">
     					            <label for="link">Keterangan</label>
     					            <p class="m-2"><?= $s['keterangan']; ?></p>
     					        </div>
-    					        <input class="btn btn-primary form-control my-3" type="submit" name="submit" id="submit" value="UBAH PERMINTAAN">
+    					        <input class="btn btn-primary btn-block my-3" type="submit" name="submit" id="submit" value="UBAH PERMINTAAN">
                             </form>
     					</div>
     				</div>
@@ -84,10 +87,9 @@ WHERE p.id_supplier=s.id_supplier AND p.id_permintaan='$id'"));
     		</div>
     	</div>
     </div>
-</div>
+
 <script>
     $("#submit").click(function(){
-        var rincian = $("#rincian").val();
         var tgl = $("#tgl").val();
         if(rincian==''||tgl==''){
             Swal.fire({

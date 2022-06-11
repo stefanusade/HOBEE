@@ -1,4 +1,4 @@
-<?php
+<?php include "footer.php"; ?><?php
 $page = 'Edukasi';
 include "header.php";
 
@@ -62,7 +62,7 @@ include "header.php";
     					            <label for="link">Link Video Youtube (contoh: https://www.youtube.com/watch?v=aBcDeF)</label>
         					        <input class="form-control" type="url" name="link" id="link" required>
     					        </div>
-    					        <input class="btn btn-primary form-control my-3" type="submit" name="submit" id="submit" value="PUBLIKASIKAN">
+    					        <input class="btn btn-primary btn-block my-3" type="submit" name="submit" id="submit" value="SIMPAN">
                             </form>
     					</div>
     				</div>

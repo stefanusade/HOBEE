@@ -1,5 +1,5 @@
 <?php
-var_dump($_POST);
+
     include "verify.php";
     if(isset($_POST['submit'])){
         include "../../../config/db.php";

@@ -90,8 +90,6 @@ $k = mysqli_fetch_assoc($daftar_kota);
         </div>
 		        </div>
 		    </div>   
-	    </div>
-	</div>
-</div>
+	    
 
 <?php include "footer.php"; ?>

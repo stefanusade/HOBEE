@@ -1,5 +1,8 @@
-<?php include "header.php"; 
+<?php 
+$page = 'Profil';
+include "header.php"; 
 $daftar_kota = mysqli_query($conn,"SELECT * FROM kota");
+$daftar_bank = mysqli_query($conn,"SELECT * FROM bank");
 if(!empty($_GET['alert'])){
     $alert = $_GET['alert'];
     if($alert=='file-too-big'){
@@ -57,6 +60,15 @@ if(!empty($_GET['alert'])){
                         <input type="text" class="form-control numeric" name="norek" id="norek" value="<?= $me['no_rekening']; ?>" required>
                     </div>
                     <div class="col-md-6">
+                        <label class="mt-3" for="select-data">Bank <span class="text-danger">*</span></label>
+                        <select class="form-control" name="bank" id="bank">
+                            <option selected>Pilih Bank</option>
+                            <?php while($b = mysqli_fetch_assoc($daftar_bank)):?>
+                            <option value="<?= $b['id_bank'];?>" <?php if($me['id_bank']==$b['id_bank']){ echo "selected";} ?>><?= $b['nama_bank'];?></option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
                         <label class="mt-3" for="jk">Jenis Kelamin <span class="text-danger">*</span></label>
                         <select type="text" class="form-control" name="jenis_kelamin" id="jk" placeholder="Nomor Handphone" required>
                             <option value="1" <?php if($me['id_jenis_kelamin']==1){ echo "selected";} ?>>Laki-Laki</option>
@@ -65,7 +77,7 @@ if(!empty($_GET['alert'])){
                     </div>
                 </div>
                 <h4>Alamat</h4>
-                <div class="row">
+                <div class="row mb-5">
                     <div class="col-md-6">
                         <label class="mt-3" for="alamat">Alamat Lengkap <span class="text-danger">*</span></label>
                         <div class="row g-2">
@@ -87,9 +99,20 @@ if(!empty($_GET['alert'])){
                         </select>
                     </div>
                 </div>
-                <input type="submit" class="form-control btn btn-primary mt-3" name="submit" value="UBAH PROFIL">
+                <h4>Password</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="mt-3" for="pass">Password (Kosongkan jika tidak ingin mengubah password)</span></label>
+                        <input type="password" class="form-control" name="pass" id="pass">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="mt-3" for="pass">Konfirmasi Password (Kosongkan jika tidak ingin mengubah password)</span></label>
+                        <input type="password" class="form-control" name="kpass" id="kpass">
+                    </div>
+                </div>
+                <input type="submit" class="form-control btn btn-primary mt-3" name="submit" value="SIMPAN">
         </form>
-        		    <a class="btn btn-block btn-danger mt-3" href="akun.php">BATALKAN</a>
+        		    <a class="btn btn-block btn-danger mt-3" href="akun.php">BATAL</a>
 		        </div>
 		    </div>   
 	    </div>
@@ -102,13 +125,15 @@ if(!empty($_GET['alert'])){
         var email = $("#email").val();
         var no_hp = $("#no_hp").val();
         var norek = $("#norek").val();
+        var bank = $("#bank").val();
         var jk = $("#jk").val();
         var tl = $("#tl").val();
         var alamat = $("#alamat").val();
         var no_rumah = $("#no_rumah").val();
         var kota = $("#kota").val();
         
-        if(nama==''||username==''||email==''||no_hp==''||nik==''){
+        if(nama==''||username==''||email==''||no_hp==''||nik==''||
+        norek==''||bank==''||jk==''||tl==''||alamat==''||no_rumah==''||kota==''){
             Swal.fire({
                 title:'Form Belum Lengkap',
                 text:'Mohon periksa kembali bidang yang belum terisi',

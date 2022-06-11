@@ -5,7 +5,7 @@ include "verify.php";
 			$old = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM admin WHERE username='$username'"));
 			$foto = '../../../assets/uploads/profile/'.$old['foto_profil'];
 			$ekstensi = array('png','jpg','jpeg');
-			$nama = md5(date('Y-m-d H:i:s')).$_FILES['profpic']['name'];
+			$nama = crc32(date('Y-m-d H:i:s')).$_FILES['profpic']['name'];
 			$x = explode('.', $nama);
 			$eks = strtolower(end($x));
 			$ukuran	= $_FILES['profpic']['size'];

@@ -38,13 +38,65 @@ if($profpic==''){
 
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../assets/css/atlantis.min.css?v=<?=date('Y-m-d H:i');?>">
+	<link rel="stylesheet" href="../assets/css/atlantis.css?v=<?=date('Y-m-d H:i');?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.2.0/dist/select2-bootstrap-5-theme.min.css" />
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="../assets/css/demo.css">
+	<style>
+		.nav-top{
+
+		background: rgba(255, 255, 255, 0.22);
+		box-shadow: 0px 4px 37px 5px rgba(0, 0, 0, 0.25);
+
+		}
+		.bg-admin{
+			background-image: url('../../assets/img/BGAdminSupp.png');
+			background-attachment: fixed;
+			background-size: cover;
+		}
+
+		.nav-side{
+		
+			background: rgba(0, 0, 0, 0.6);
+			box-shadow: 0px 0px 50px 11px rgba(0, 0, 0, 0.25);
+
+		}
+
+		.card{
+			background: rgba(0, 0, 0, 0.6);
+			box-shadow: 0px 0px 50px 11px rgba(0, 0, 0, 0.25);
+		}
+		.main-panel{
+			color:white;
+		}
+		
+		.form-control:valid {
+  			background-color:  rgba(0, 0, 0, 0.25)!important;
+			border: 0px;
+			border-radius: 10px;
+			color:white;
+		}
+		.form-control {
+  			background-color:  rgba(0, 0, 0, 0.25)!important;
+			border: 0px;
+			border-radius: 10px;
+			color:white;
+		}
+		form, input, label, p {
+    		color: white !important;
+		}
+		.page-title{
+			color:white
+		}
+
+		.teksp{
+			color:white;
+		}
+		
+	</style>
 </head>
-<body>
+<body class="bg-admin">
     	<!--   Core JS Files   -->
 	<script src="../assets/js/core/jquery.3.2.1.min.js"></script>
 	<script src="../assets/js/core/popper.min.js"></script>
@@ -87,9 +139,9 @@ if($profpic==''){
 	
 	<script src="../../assets/js/main.js"></script>
 	<div class="wrapper">
-		<div class="main-header">
+		<div class="main-header bg-admin">
 			<!-- Logo Header -->
-			<div class="logo-header" data-background-color="orange2">
+			<div class="logo-header" >
 				
 				<a href="index.html" class="logo text-light">
 					<!-- <img src="../assets/img/logo.svg" alt="navbar brand" class="navbar-brand"> --> HOBEE
@@ -109,7 +161,7 @@ if($profpic==''){
 			<!-- End Logo Header -->
 
 			<!-- Navbar Header -->
-			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="orange">
+			<nav class="navbar navbar-header navbar-expand-lg nav-top">
 				
 				<div class="container-fluid">
 					<div class="collapse" id="search-nav">
@@ -329,14 +381,14 @@ if($profpic==''){
 		</div>
 
 		<!-- Sidebar -->
-		<div class="sidebar sidebar-style-2">			
+		<div class="sidebar sidebar-style-2 nav-side bg-admin">			
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="avatar-sm float-left mr-2">
 							<img src="../../assets/uploads/profile/<?=$profpic;?>" alt="..." class="avatar-img rounded-circle">
 						</div>
-						<div class="info text-dark">
+						<div class="info">
 								<b><?= $_SESSION['username']; ?></b><br>
 								<small>Supplier</small>
 							<div class="clearfix"></div>
@@ -386,3 +438,9 @@ if($profpic==''){
 			</div>
 		</div>
 		<!-- End Sidebar -->
+		<?php 
+    if(isset($_SESSION['success'])){
+        echo "<script>Swal.fire({title: 'Login Berhasil!',text: 'Berhasil melakukan login',icon: 'success',confirmButtonText: 'OK'})</script>";
+        unset($_SESSION['success']);
+    }
+    ?>

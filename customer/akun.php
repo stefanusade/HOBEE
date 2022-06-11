@@ -29,7 +29,7 @@ $daftar_kota = mysqli_query($conn,"SELECT * FROM kota");
                         <input type="text" class="form-control numeric" name="no_hp" id="no_hp" maxlength="13" value="<?= $u['no_hp']; ?>" required>
                     </div>
                     <div class="col-md-6">
-                        <label class="mt-3" for="nik">Nomor Induk Kependudukan <span class="text-danger">*</span></label>
+                        <label class="mt-3" for="nik">NIK <span class="text-danger">*</span></label>
                         <input type="text" class="form-control numeric" name="nik" id="nik" maxlength="16" value="<?= $u['no_ktp']; ?>" required>
                     </div>
                     <div class="col-md-6">
@@ -49,7 +49,7 @@ $daftar_kota = mysqli_query($conn,"SELECT * FROM kota");
                     </div>
                 </div>
                 <h4>Alamat</h4>
-                <div class="row">
+                <div class="row mb-5">
                     <div class="col-md-6">
                         <label class="mt-3" for="alamat">Alamat Lengkap <span class="text-danger">*</span></label>
                         <div class="row g-2">
@@ -69,6 +69,17 @@ $daftar_kota = mysqli_query($conn,"SELECT * FROM kota");
                             <option value="<?= $k['id_kota'];?>" <?php if($u['id_kota']==$k['id_kota']){ echo "selected";} ?>><?= $k['nama_kota'];?></option>
                             <?php endwhile; ?>
                         </select>
+                    </div>
+                </div>
+                <h4>Password</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="mt-3" for="pass">Password (Kosongkan jika tidak ingin mengubah password)</span></label>
+                        <input type="password" class="form-control" name="pass" id="pass">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="mt-3" for="pass">Konfirmasi Password (Kosongkan jika tidak ingin mengubah password)</span></label>
+                        <input type="password" class="form-control" name="kpass" id="kpass">
                     </div>
                 </div>
                 <input type="submit" class="form-control btn btn-primary mt-3" name="submit" id="submit" value="SIMPAN">

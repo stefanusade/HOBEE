@@ -62,7 +62,8 @@ if(!empty($_GET['alert'])){
 										        if($d['status']=='Diproses'){
 										            $status="<p class='badge badge-warning m-0'>Diproses</p>";
 										        }elseif($d['status']=='Selesai'){
-										            $status="<p class='badge badge-success m-0'>Success</p>";
+										            $status="<p class='badge badge-success m-0'>Selesai</p>";
+										            $class = 'disabled';
 										        }
 										        echo "
 										            <tr>
@@ -73,7 +74,7 @@ if(!empty($_GET['alert'])){
 										                <td>$d[kuantitas]</td>
 										                <td>$d[harga]</td>
 										                <td>
-										                    <a href='permintaan_edit.php?id=$d[id_permintaan]' class='btn btn-sm btn-warning mr-2 mb-2'><i class='fas fa-pen'></i></a>
+										                    <a href='permintaan_edit.php?id=$d[id_permintaan]' class='btn btn-sm btn-warning mr-2 mb-2 $class'><i class='fas fa-pen'></i></a>
 										                </td>
 										            </tr>
 										        ";

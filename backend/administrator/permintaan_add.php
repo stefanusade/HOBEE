@@ -39,7 +39,7 @@ WHERE ss.id_supplier=s.id_supplier AND ss.id_supplier='$id'"));
     			<div class="col-md-12">
     				<div class="card">
     					<div class="card-body py-3">
-    					    <a href="stok.php" class="btn btn-danger">BATALKAN</a> 
+    					    <a href="stok.php" class="btn btn-danger">BATAL</a> 
     					    <form action="./add/permintaan.php" method="post">
     					        <div class="row mt-3">
     					            <div class="col-6">
@@ -62,14 +62,14 @@ WHERE ss.id_supplier=s.id_supplier AND ss.id_supplier='$id'"));
     					            </div>
             					    <div class="col-6 mt-3">
             					        <label for="qty">Kuantitas</label>
-                                        <input class="form-control" type="number" name="qty" id="qty" required>
+                                        <input class="form-control" type="number" name="qty" id="qty" max="<?= $s['kuantitas']; ?>" required>
             					    </div>
     					        </div>
         					    <div class="mt-3">
     					            <label for="link">Keterangan</label>
         					        <textarea class="ckeditor" id="ket" name="ket" required></textarea>
     					        </div>
-    					        <input class="btn btn-primary form-control my-3" type="submit" name="submit" id="submit" value="KIRIM PERMINTAAN">
+    					        <input class="btn btn-primary btn-block my-3" type="submit" name="submit" id="submit" value="SIMPAN">
                             </form>
     					</div>
     				</div>
@@ -82,6 +82,7 @@ WHERE ss.id_supplier=s.id_supplier AND ss.id_supplier='$id'"));
     $("#submit").click(function(){
         var rincian = $("#rincian").val();
         var tgl = $("#tgl").val();
+        var qty = $("#qty").val();
         if(rincian==''||tgl==''){
             Swal.fire({
                 title:'Form Belum Lengkap',
@@ -90,7 +91,18 @@ WHERE ss.id_supplier=s.id_supplier AND ss.id_supplier='$id'"));
                 confirmButtonText:'OK',
             });
         }
-    })
+    });
+    $("#qty").keyup(function(){
+        if($(this).val()>parseInt(<?= $s['kuantitas']; ?>)){
+            Swal.fire({
+                title:'Stok Kurang',
+                text:'Maksimal permintaan stok <?= $s['kuantitas']; ?>',
+                icon:'warning',
+                confirmButtonText:'OK',
+            });
+            $(this).val('');
+        }
+    });
 </script>
 
 <?php include "footer.php"; ?>

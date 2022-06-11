@@ -52,6 +52,7 @@ $list = mysqli_query($conn,"SELECT p.*, s.status_permintaan AS status FROM permi
 										                            <p><strong>Tanggal:</strong> $d[tanggal_permintaan]</p>
     										                        <p><strong>Qty:</strong> $d[kuantitas]</p>
     										                        <p><strong>Harga:</strong> $d[harga]</p>
+    										                        <a class='btn btn-block btn-warning' href='permintaan_edit.php?id=$d[id_permintaan]'>EDIT</a>
 										                        </div>
 										                    </div>
 										                </div>

@@ -24,14 +24,14 @@ if(!empty($_GET['alert'])){
 				<ul class="breadcrumbs">
 					<li class="nav-home">
 				    	<a href="index.php">
-			    	    	<i class="flaticon-home"></i>
+			    	    	<i class="flaticon-home text-white"></i>
 		    			</a>
 					</li>
 					<li class="separator">
 						<i class="flaticon-right-arrow"></i>
 					</li>
 					<li class="nav-item">
-						<a href="edukasi.php">Edukasi</a>
+						<a href="edukasi.php" class="text-white">Edukasi</a>
 					</li>
 				</ul>
 			</div>
@@ -63,9 +63,9 @@ if(!empty($_GET['alert'])){
 										                <td>$d[author]</td>
 										                <td class='p-0'>
     										                <div class='row'>
-    										                        <a href='../../edukasi.php?id=$d[id]' target='_blank' class='btn btn-sm btn-primary mr-2 mb-2'><i class='fas fa-eye'></i></a>
-    										                        <a href='edukasi_edit.php?id=$d[id]' class='btn btn-sm btn-warning mr-2 mb-2'><i class='fas fa-pen'></i></a>
-    										                        <a href='./delete/edukasi.php?id=$d[id]' class='delete btn btn-danger btn-sm mr-2 mb-2' ><i class='fas fa-trash-alt'></i></a>
+    										                        <a href='../../edukasi.php?id=$d[id]' target='_blank' class='btn btn-sm btn-primary mr-2 mb-2' data-toggle='tooltip' data-placement='bottom' title='Lihat'><i class='fas fa-eye'></i></a>
+    										                        <a href='edukasi_edit.php?id=$d[id]' class='btn btn-sm btn-warning mr-2 mb-2'><i class='fas fa-pen' data-toggle='tooltip' data-placement='bottom' title='Edit'></i></a>
+    										                        <a href='./delete/edukasi.php?id=$d[id]' class='delete btn btn-danger btn-sm mr-2 mb-2' ><i class='fas fa-trash-alt' data-toggle='tooltip' data-placement='bottom' title='Hapus'></i></a>
     										                </div>
 										                </td>
 										            </tr>

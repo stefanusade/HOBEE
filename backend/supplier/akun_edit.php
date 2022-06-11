@@ -73,7 +73,7 @@ if(!empty($_GET['alert'])){
                     </div>
                 </div>
                 <h4>Alamat</h4>
-                <div class="row">
+                <div class="row mb-5">
                     <div class="col-md-6">
                         <label class="mt-3" for="alamat">Alamat Lengkap <span class="text-danger">*</span></label>
                         <div class="row g-2">
@@ -95,7 +95,19 @@ if(!empty($_GET['alert'])){
                         </select>
                     </div>
                 </div>
+                <h4>Password</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label class="mt-3" for="pass">Password (Kosongkan jika tidak ingin mengubah password)</span></label>
+                        <input type="password" class="form-control" name="pass" id="pass">
+                    </div>
+                    <div class="col-md-6">
+                        <label class="mt-3" for="pass">Konfirmasi Password (Kosongkan jika tidak ingin mengubah password)</span></label>
+                        <input type="password" class="form-control" name="kpass" id="kpass">
+                    </div>
+                </div>
                 <input type="submit" class="form-control btn btn-primary mt-3" name="submit" value="UBAH PROFIL">
+                <a href="akun.php" class="form-control btn btn-danger mt-3">BATAL</a>
         </form>
         		    
 		        </div>

@@ -3,12 +3,19 @@ $page = "Login Customer";
 include "header.php";
 
 $alert = '';
-
+$ref = '';
+$id = '';
+if(isset($_GET['ref'])){
+    $ref = 'order';
+    $id = $_GET['id'];
+}
 if(isset($_POST['login'])){
     require_once "./config/db.php";
     if(isset($_POST['email']) && isset($_POST['pass'])){
         $email = $_POST['email'];
         $pass = $_POST['pass'];
+        $ref = $_POST['ref'];
+        $id = $_POST['id'];
         $search = mysqli_query($conn,"SELECT * FROM customer WHERE email = '$email'");
         if(mysqli_num_rows($search)>0){
             $d = mysqli_fetch_assoc($search);
@@ -20,7 +27,12 @@ if(isset($_POST['login'])){
                     $_SESSION['role'] = 3;
                     $_SESSION['username'] = $d['username'];
                     $_SESSION['pass'] = $pass;
-                    header('Location:customer');
+                    $_SESSION['success'] = true;
+                    if(!empty($ref)){
+                        header("Location:pesanan.php?id=$id");
+                    }else{
+                        header("Location:./customer");
+                    }
                 }else{
                     include "./config/mail.php";
                     $kode = rand(100000,999999);
@@ -57,10 +69,6 @@ if(isset($_POST['login'])){
     }
 }
 
-if(isset($_SESSION['login']) && $_SESSION['role']==3){
-    header('Location:./customer');
-}
-
 // alert
 
 if(!empty($_GET['alert'])){
@@ -73,6 +81,8 @@ if(!empty($_GET['alert'])){
         echo "<script>Swal.fire({title: 'Gagal Login!',text: 'Password Yang Anda Masukkan Salah',icon: 'error',confirmButtonText: 'Coba Lagi'})</script>";
     }elseif($alert=='register-success'){
         echo "<script>Swal.fire({title: 'Pendaftaran Berhasil!',text: 'Akun berhasil diverifikasi.',icon: 'success',confirmButtonText: 'OK'})</script>";
+    }elseif($alert=='nologin'){
+        echo "<script>Swal.fire({title: 'Login',text: 'Anda perlu login terlebih dahulu.',icon: 'info',confirmButtonText: 'OK'})</script>";
     }
 }
 ?>
@@ -88,6 +98,8 @@ if(!empty($_GET['alert'])){
                     <small>Masukkan informasi login pada form yang tersedia</small>
                     <form method="POST" action="">
                         <div class="form-floating my-3">
+                            <input type="hidden" name="ref" value="<?=$ref; ?>">
+                            <input type="hidden" name="id" value="<?=$id; ?>">
                             <input type="email" class="form-control" name="email" id="floatingInput" placeholder="name@example.com">
                             <label for="floatingInput">Email address</label>
                         </div>

@@ -58,7 +58,7 @@ if(!empty($_GET['alert'])){
         					        <label for="ket">Keterangan</label>
                                     <textarea class="ckeditor" id="ket" name="ket" required><?= $s['keterangan']; ?></textarea>
         					    </div>
-    					        <input class="btn btn-primary form-control my-3" type="submit" name="submit" id="submit" value="UPDATE">
+    					        <input class="btn btn-primary btn-block my-3" type="submit" name="submit" id="submit" value="SIMPAN">
                             </form>
     					</div>
     				</div>

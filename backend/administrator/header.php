@@ -7,13 +7,24 @@ if($_SESSION['role']!=1){
     header('Location:../../logout.php');
 }
 include "../../config/db.php";
-$username = $_SESSION['username'];
-$cust = mysqli_query($conn,"SELECT c.id_customer AS id, c.nama_customer AS nama, c.email AS email, c.no_jalan AS no, c.nama_jalan AS jalan, k.nama_kota AS kota FROM customer c, kota k WHERE c.id_kota=k.id_kota");
-$supp = mysqli_query($conn,"SELECT s.id_supplier AS id, s.nama_supplier AS nama, s.email AS email, s.no_jalan AS no, s.nama_jalan AS jalan, k.nama_kota AS kota FROM supplier s, kota k WHERE s.id_kota=k.id_kota");
-$adm = mysqli_query($conn,"SELECT a.id_admin AS id, a.nama_admin AS nama, a.email AS email, a.no_jalan AS no, a.nama_jalan AS jalan, k.nama_kota AS kota FROM admin a, kota k WHERE a.id_kota=k.id_kota");
-$edu = mysqli_query($conn,"SELECT e.id_edukasi AS id, a.nama_admin AS author, e.judul AS judul, e.tgl_post AS tgl FROM edukasi e, admin a WHERE a.id_admin=e.id_admin");
-$me = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM admin WHERE username = '$username'"));
-$profpic = $me['foto_profil'];
+
+// Load All Data
+$month      = date('m');
+$year       = date('Y');
+$username   = $_SESSION['username'];
+$cust       = mysqli_query($conn,"SELECT c.id_customer AS id, c.nama_customer AS nama, c.email AS email, c.no_jalan AS no, c.nama_jalan AS jalan, k.nama_kota AS kota FROM customer c, kota k WHERE c.id_kota=k.id_kota");
+$supp       = mysqli_query($conn,"SELECT s.id_supplier AS id, s.nama_supplier AS nama, s.email AS email, s.no_jalan AS no, s.nama_jalan AS jalan, k.nama_kota AS kota FROM supplier s, kota k WHERE s.id_kota=k.id_kota");
+$adm        = mysqli_query($conn,"SELECT a.id_admin AS id, a.nama_admin AS nama, a.email AS email, a.no_jalan AS no, a.nama_jalan AS jalan, k.nama_kota AS kota FROM admin a, kota k WHERE a.id_kota=k.id_kota");
+$edu        = mysqli_query($conn,"SELECT e.id_edukasi AS id, a.nama_admin AS author, e.judul AS judul, e.tgl_post AS tgl FROM edukasi e, admin a WHERE a.id_admin=e.id_admin");
+$prod       = mysqli_query($conn,"SELECT * FROM produk ORDER BY id_produk DESC");
+$order      = mysqli_query($conn,"SELECT p.id_pesanan AS id, pr.nama_produk AS nama_produk, p.kuantitas AS qty, p.harga AS harga, b.nama_status_pembayaran AS bayar, s.nama_status_pesanan AS status
+FROM pesanan p, status_pembayaran b, status_pesanan s, produk AS pr 
+WHERE p.id_status_pembayaran=b.id_status_pembayaran AND p.id_status_pesanan=s.id_status_pesanan AND pr.id_produk=p.id_produk ORDER BY p.id_pesanan DESC");
+$produksi   = mysqli_query($conn,"SELECT p.id_produksi AS id, k.nama_produk AS produk, p.tanggal_produksi AS tgl, p.berat AS berat FROM produksi p, produk k WHERE p.id_produk=k.id_produk ORDER BY p.id_produksi DESC");
+$income     = mysqli_query($conn,"SELECT * FROM pemasukan WHERE MONTH(tanggal_pemasukan) = '$month' AND YEAR(tanggal_pemasukan) = '$year' ORDER BY tanggal_pemasukan DESC");
+$outcome    = mysqli_query($conn,"SELECT * FROM pengeluaran WHERE MONTH(tanggal_pengeluaran) = '$month' AND YEAR(tanggal_pengeluaran) = '$year' ORDER BY tanggal_pengeluaran DESC");
+$me         = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM admin WHERE username = '$username'"));
+$profpic    = $me['foto_profil'];
 if($profpic==''){
     $profpic = 'sample.jpg';
 }
@@ -22,9 +33,9 @@ if($profpic==''){
 <html lang="id">
 <head>
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-	<title>Admin Dashboard</title>
+	<title>Admin — <?= $page; ?></title>
 	<meta content='width=device-width, initial-scale=1.0, shrink-to-fit=no' name='viewport' />
-	<link rel="icon" href="../assets/img/icon.ico" type="image/x-icon"/>
+	<link rel="icon" href="../../assets/img/Logo.png" type="image/x-icon"/>
 
 	<!-- Fonts and icons -->
 	<script src="../assets/js/plugin/webfont/webfont.min.js"></script>
@@ -40,13 +51,65 @@ if($profpic==''){
 
 	<!-- CSS Files -->
 	<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-	<link rel="stylesheet" href="../assets/css/atlantis.min.css?v=<?=date('Y-m-d H:i');?>">
+	<link rel="stylesheet" href="../assets/css/atlantis.css?v=<?=date('Y-m-d H:i');?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.2.0/dist/select2-bootstrap-5-theme.min.css" />
 	<!-- CSS Just for demo purpose, don't include it in your project -->
 	<link rel="stylesheet" href="../assets/css/demo.css">
+	<style>
+		.nav-top{
+
+		background: rgba(255, 255, 255, 0.22);
+		box-shadow: 0px 4px 37px 5px rgba(0, 0, 0, 0.25);
+
+		}
+		.bg-admin{
+			background-image: url('../../assets/img/BGAdminSupp.png');
+			background-attachment: fixed;
+			background-size: cover;
+		}
+
+		.nav-side{
+		
+			background: rgba(0, 0, 0, 0.6);
+			box-shadow: 0px 0px 50px 11px rgba(0, 0, 0, 0.25);
+
+		}
+
+		.card{
+			background: rgba(0, 0, 0, 0.6);
+			box-shadow: 0px 0px 50px 11px rgba(0, 0, 0, 0.25);
+		}
+		.main-panel{
+			color:white;
+		}
+		
+		.form-control:valid {
+  			background-color:  rgba(0, 0, 0, 0.25)!important;
+			border: 0px;
+			border-radius: 10px;
+			color:white;
+		}
+		.form-control {
+  			background-color:  rgba(0, 0, 0, 0.25)!important;
+			border: 0px;
+			border-radius: 10px;
+			color:white;
+		}
+		form, input, label, p {
+    		color: white !important;
+		}
+		.page-title{
+			color:white
+		}
+
+		.teksp{
+			color:white;
+		}
+		
+	</style>
 </head>
-<body>
+<body class="bg-admin">
     
     <!--   Core JS Files   -->
 	<script src="../assets/js/core/jquery.3.2.1.min.js"></script>
@@ -62,13 +125,10 @@ if($profpic==''){
 
 
 	<!-- Chart JS -->
-	<script src="../assets/js/plugin/chart.js/chart.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
 
 	<!-- jQuery Sparkline -->
 	<script src="../assets/js/plugin/jquery.sparkline/jquery.sparkline.min.js"></script>
-
-	<!-- Chart Circle -->
-	<script src="../assets/js/plugin/chart-circle/circles.min.js"></script>
 
 	<!-- Datatables -->
 	<script src="../assets/js/plugin/datatables/datatables.min.js"></script>
@@ -92,13 +152,16 @@ if($profpic==''){
 	<script >
 		$(document).ready(function() {
 			$('#basic-datatables').DataTable();
+			$('#nosort').DataTable({
+			    "order": [ 0, 'desc' ]
+			});
 		});
 	</script>
 
 	<div class="wrapper">
-		<div class="main-header">
+		<div class="main-header bg-admin">
 			<!-- Logo Header -->
-			<div class="logo-header" data-background-color="orange2">
+			<div class="logo-header">
 				
 				<a href="index.html" class="logo text-light">
 					<!-- <img src="../assets/img/logo.svg" alt="navbar brand" class="navbar-brand"> --> HOBEE
@@ -118,193 +181,13 @@ if($profpic==''){
 			<!-- End Logo Header -->
 
 			<!-- Navbar Header -->
-			<nav class="navbar navbar-header navbar-expand-lg" data-background-color="orange">
+			<nav class="navbar navbar-header navbar-expand-lg nav-top">
 				
 				<div class="container-fluid">
 					<div class="collapse" id="search-nav">
 					</div>
 					<ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link dropdown-toggle" href="#" id="messageDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fa fa-envelope"></i>
-							</a>
-							<ul class="dropdown-menu messages-notif-box animated fadeIn" aria-labelledby="messageDropdown">
-								<li>
-									<div class="dropdown-title d-flex justify-content-between align-items-center">
-										Messages 									
-										<a href="#" class="small">Mark all as read</a>
-									</div>
-								</li>
-								<li>
-									<div class="message-notif-scroll scrollbar-outer">
-										<div class="notif-center">
-											<a href="#">
-												<div class="notif-img"> 
-													<img src="../assets/img/jm_denis.jpg" alt="Img Profile">
-												</div>
-												<div class="notif-content">
-													<span class="subject">Jimmy Denis</span>
-													<span class="block">
-														How are you ?
-													</span>
-													<span class="time">5 minutes ago</span> 
-												</div>
-											</a>
-											<a href="#">
-												<div class="notif-img"> 
-													<img src="../assets/img/chadengle.jpg" alt="Img Profile">
-												</div>
-												<div class="notif-content">
-													<span class="subject">Chad</span>
-													<span class="block">
-														Ok, Thanks !
-													</span>
-													<span class="time">12 minutes ago</span> 
-												</div>
-											</a>
-											<a href="#">
-												<div class="notif-img"> 
-													<img src="../assets/img/mlane.jpg" alt="Img Profile">
-												</div>
-												<div class="notif-content">
-													<span class="subject">Jhon Doe</span>
-													<span class="block">
-														Ready for the meeting today...
-													</span>
-													<span class="time">12 minutes ago</span> 
-												</div>
-											</a>
-											<a href="#">
-												<div class="notif-img"> 
-													<img src="../assets/img/talha.jpg" alt="Img Profile">
-												</div>
-												<div class="notif-content">
-													<span class="subject">Talha</span>
-													<span class="block">
-														Hi, Apa Kabar ?
-													</span>
-													<span class="time">17 minutes ago</span> 
-												</div>
-											</a>
-										</div>
-									</div>
-								</li>
-								<li>
-									<a class="see-all" href="javascript:void(0);">See all messages<i class="fa fa-angle-right"></i> </a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link dropdown-toggle" href="#" id="notifDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-								<i class="fa fa-bell"></i>
-								<span class="notification">4</span>
-							</a>
-							<ul class="dropdown-menu notif-box animated fadeIn" aria-labelledby="notifDropdown">
-								<li>
-									<div class="dropdown-title">You have 4 new notification</div>
-								</li>
-								<li>
-									<div class="notif-scroll scrollbar-outer">
-										<div class="notif-center">
-											<a href="#">
-												<div class="notif-icon notif-primary"> <i class="fa fa-user-plus"></i> </div>
-												<div class="notif-content">
-													<span class="block">
-														New user registered
-													</span>
-													<span class="time">5 minutes ago</span> 
-												</div>
-											</a>
-											<a href="#">
-												<div class="notif-icon notif-success"> <i class="fa fa-comment"></i> </div>
-												<div class="notif-content">
-													<span class="block">
-														Rahmad commented on Admin
-													</span>
-													<span class="time">12 minutes ago</span> 
-												</div>
-											</a>
-											<a href="#">
-												<div class="notif-img"> 
-													<img src="../assets/img/profile2.jpg" alt="Img Profile">
-												</div>
-												<div class="notif-content">
-													<span class="block">
-														Reza send messages to you
-													</span>
-													<span class="time">12 minutes ago</span> 
-												</div>
-											</a>
-											<a href="#">
-												<div class="notif-icon notif-danger"> <i class="fa fa-heart"></i> </div>
-												<div class="notif-content">
-													<span class="block">
-														Farrah liked Admin
-													</span>
-													<span class="time">17 minutes ago</span> 
-												</div>
-											</a>
-										</div>
-									</div>
-								</li>
-								<li>
-									<a class="see-all" href="javascript:void(0);">See all notifications<i class="fa fa-angle-right"></i> </a>
-								</li>
-							</ul>
-						</li>
-						<li class="nav-item dropdown hidden-caret">
-							<a class="nav-link" data-toggle="dropdown" href="#" aria-expanded="false">
-								<i class="fas fa-layer-group"></i>
-							</a>
-							<div class="dropdown-menu quick-actions quick-actions-info animated fadeIn">
-								<div class="quick-actions-header">
-									<span class="title mb-1">Quick Actions</span>
-									<span class="subtitle op-8">Shortcuts</span>
-								</div>
-								<div class="quick-actions-scroll scrollbar-outer">
-									<div class="quick-actions-items">
-										<div class="row m-0">
-											<a class="col-6 col-md-4 p-0" href="#">
-												<div class="quick-actions-item">
-													<i class="flaticon-file-1"></i>
-													<span class="text">Generated Report</span>
-												</div>
-											</a>
-											<a class="col-6 col-md-4 p-0" href="#">
-												<div class="quick-actions-item">
-													<i class="flaticon-database"></i>
-													<span class="text">Create New Database</span>
-												</div>
-											</a>
-											<a class="col-6 col-md-4 p-0" href="#">
-												<div class="quick-actions-item">
-													<i class="flaticon-pen"></i>
-													<span class="text">Create New Post</span>
-												</div>
-											</a>
-											<a class="col-6 col-md-4 p-0" href="#">
-												<div class="quick-actions-item">
-													<i class="flaticon-interface-1"></i>
-													<span class="text">Create New Task</span>
-												</div>
-											</a>
-											<a class="col-6 col-md-4 p-0" href="#">
-												<div class="quick-actions-item">
-													<i class="flaticon-list"></i>
-													<span class="text">Completed Tasks</span>
-												</div>
-											</a>
-											<a class="col-6 col-md-4 p-0" href="#">
-												<div class="quick-actions-item">
-													<i class="flaticon-file"></i>
-													<span class="text">Create New Invoice</span>
-												</div>
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
+						
 						<li class="nav-item dropdown hidden-caret">
 							<a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false">
 								<div class="avatar-sm">
@@ -338,14 +221,14 @@ if($profpic==''){
 		</div>
 
 		<!-- Sidebar -->
-		<div class="sidebar sidebar-style-2">			
+		<div class="sidebar sidebar-style-2 nav-side bg-admin">			
 			<div class="sidebar-wrapper scrollbar scrollbar-inner">
 				<div class="sidebar-content">
 					<div class="user">
 						<div class="avatar-sm float-left mr-2">
 							<img src="../../assets/uploads/profile/<?=$profpic;?>" alt="..." class="avatar-img rounded-circle">
 						</div>
-						<div class="info text-dark">
+						<div class="info">
 								<b><?= $_SESSION['username']; ?></b><br>
 								<small>Administrator</small>
 							<div class="clearfix"></div>
@@ -371,11 +254,14 @@ if($profpic==''){
 							</div>
 						</div>
 					</div>
+					<div class="teks">
+						
+					</div>
 					<ul class="nav nav-primary">
-						<li class="nav-item <?php if($page=='Dashboard'){echo 'active'; } ?>">
+						<li class="nav-item <?php if($page=='Dashboard'){echo 'active'; } ?>" >
 							<a href="index.php" >
-								<i class="fas fa-home"></i>
-								<p>Dashboard</p>
+									<i class="fas fa-home"></i>
+									<p>Dashboard</p>
 							</a>
 						</li>
 						<li class="nav-item <?php if($page=='Akun'){echo 'active'; } ?>">
@@ -385,7 +271,7 @@ if($profpic==''){
 								<span class="caret"></span>
 							</a>
 							<div class="collapse" id="akun">
-								<ul class="nav nav-collapse">
+								<ul class="nav nav-collapse teks">
 									<li>
 										<a href="admin.php">
 											<span class="sub-item">Admin</span>
@@ -431,8 +317,79 @@ if($profpic==''){
 								</ul>
 							</div>
 						</li>
+						<li class="nav-item <?php if($page=='Katalog'){echo 'active'; } ?>">
+							<a href="katalog.php" >
+								<i class="fas fa-shopping-bag"></i>
+								<p>Katalog</p>
+							</a>
+						</li>
+						<li class="nav-item <?php if($page=='Pesanan'){echo 'active'; } ?>">
+							<a href="pesanan.php" >
+								<i class="fas fa-shopping-cart"></i>
+								<p>Pesanan</p>
+							</a>
+						</li>
+						<li class="nav-item <?php if($page=='Keuangan'){echo 'active'; } ?>">
+							<a data-toggle="collapse" href="#keuangan" class="collapsed" aria-expanded="false">
+								<i class="fas fa-wallet"></i>
+								<p>Data Keuangan</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="keuangan">
+								<ul class="nav nav-collapse teks">
+									<li>
+										<a href="pemasukan.php">
+											<span class="sub-item">Pemasukan</span>
+										</a>
+									</li>
+									<li>
+										<a href="pengeluaran.php">
+											<span class="sub-item">Pengeluaran</span>
+										</a>
+									</li>
+									<li>
+										<a href="laporan.php">
+											<span class="sub-item">Laporan Keuangan</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li class="nav-item <?php if($page=='Produksi'){echo 'active'; } ?>">
+							<a href="produksi.php" >
+								<i class="fas fa-pallet"></i>
+								<p>Produksi</p>
+							</a>
+						</li>
+						<li class="nav-item <?php if($page=='Grafik'){echo 'active'; } ?>">
+							<a data-toggle="collapse" href="#grafik" class="collapsed" aria-expanded="false">
+								<i class="fas fa-project-diagram"></i>
+								<p>Grafik</p>
+								<span class="caret"></span>
+							</a>
+							<div class="collapse" id="grafik">
+								<ul class="nav nav-collapse teks">
+									<li>
+										<a href="hasil_produksi.php">
+											<span class="sub-item">Hasil Produksi</span>
+										</a>
+									</li>
+									<li>
+										<a href="hasil_penjualan.php">
+											<span class="sub-item">Hasil Penjualan</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</li>
 					</ul>
 				</div>
 			</div>
 		</div>
 		<!-- End Sidebar -->
+		<?php 
+    if(isset($_SESSION['success'])){
+        echo "<script>Swal.fire({title: 'Login Berhasil!',text: 'Berhasil melakukan login',icon: 'success',confirmButtonText: 'OK'})</script>";
+        unset($_SESSION['success']);
+    }
+    ?>

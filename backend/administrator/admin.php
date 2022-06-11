@@ -1,6 +1,22 @@
 <?php 
 $page='Akun';
-include "header.php"; ?>
+include "header.php"; 
+if(!empty($_GET['alert'])){
+    $alert = $_GET['alert'];
+    if($alert=='cancel'){
+        echo "<script>Swal.fire({title: 'Batal',text: 'Batal menambahkan data admin',icon: 'warning',confirmButtonText: 'OK'})</script>";
+    }elseif($alert=='success'){
+        echo "<script>Swal.fire({title: 'Berhasil',text: 'Berhasil menambahkan data admin',icon: 'success',confirmButtonText: 'OK'})</script>";
+    }elseif($alert=='server-error'){
+        echo "<script>Swal.fire({title: 'Gagal',text: 'Terjadi gangguan pada server',icon: 'error',confirmButtonText: 'OK'})</script>";
+    }elseif($alert=='incomplete'){
+        echo "<script>Swal.fire({title: 'Gagal',text: 'Form belum terisi lengkap',icon: 'error',confirmButtonText: 'OK'})</script>";
+    }elseif($alert=='duplicate'){
+        echo "<script>Swal.fire({title: 'Gagal',text: 'Akun sudah ada',icon: 'error',confirmButtonText: 'OK'})</script>";
+    }
+}
+?>
+
 <div class="main-panel">
 	<div class="content">
 		<div class="page-inner">
@@ -30,6 +46,7 @@ include "header.php"; ?>
 				<div class="col-md-12">
 					<div class="card">
 						<div class="card-body py-3">
+						    <a class="btn btn-primary mb-3" href="admin_add.php">+ TAMBAH</a>
 							<div class="table-responsive">
 								<table id="basic-datatables" class="display table table-striped table-hover" >
 									<thead>
@@ -55,7 +72,7 @@ include "header.php"; ?>
 										                <td>
 										                <form action='details.php' method='POST'>
 										                <input type='hidden' name='role' value='admin'/>
-										                <button class='btn btn-sm btn-primary' type='submit' name='lihat' value='$d[id]'><i class='fas fa-eye'></i></button>
+										                <button class='btn btn-sm btn-primary' type='submit' name='lihat' value='$d[id]' data-toggle='tooltip' data-placement='bottom' title='Lihat'><i class='fas fa-eye'></i></button>
 										                </form></td>
 										            </tr>
 										        ";

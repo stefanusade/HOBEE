@@ -13,28 +13,46 @@ $(document).ready(function() {
 });
 
 $(document).ready(function(){
-    $("#history").hide();
-    $("#profile").hide();
+    var hash = window.location.hash;
+    if(hash===''){
+        $("#profile").hide();
+        $("#order").hide();
+    }else if(hash=='#dashboard'){
+        $("#dashboard").show();
+        $("#profile").hide();
+        $("#order").hide();
+    }else if(hash=='#profile'){
+        $("#dashboard").hide();
+        $("#profile").show();
+        $("#order").hide();
+    }else if(hash=='#order'){
+        $("#dashboard").hide();
+        $("#profile").hide();
+        $("#order").show();
+    }
     $("#btn-dashboard").click(function(){
         $("#dashboard").show();
         $("#profile").hide();
-        $("#history").hide();
+        $("#order").hide();
     });
     $("#btn-profile").click(function(){
         $("#dashboard").hide();
         $("#profile").show();
-        $("#history").hide();
+        $("#order").hide();
     });
-    $("#btn-history").click(function(){
+    $("#btn-order").click(function(){
         $("#dashboard").hide();
         $("#profile").hide();
-        $("#history").show();
+        $("#order").show();
     });
 });
 
 $(document).ready(function(){
-    $("#supplier").hide();
-    $("#link-admin").addClass('active');
+    var hash = window.location.hash;
+    if(hash===''){
+        $("#supplier").hide();
+        $("#link-admin").addClass('active');
+    }
     $("#btn-admin").click(function(){
         $("#admin").show();
         $("#supplier").hide();

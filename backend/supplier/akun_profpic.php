@@ -24,9 +24,9 @@ $daftar_kota = mysqli_query($conn,"SELECT * FROM kota");
                         <input type="file" class="form-control" name="profpic" id="profpic" required>
                     </div>
                 </div>
-                <input type="submit" class="form-control btn btn-primary mt-3" name="submit" value="UBAH FOTO">
+                <input type="submit" class="form-control btn btn-primary mt-3" name="submit" value="SIMPAN">
         </form>
-        		    <a class="btn btn-block btn-danger mt-2" href="akun_edit.php">BATALKAN</a>
+        		    <a class="btn btn-block btn-danger mt-2" href="akun_edit.php">BATAL</a>
 		        </div>
 		    </div>   
 	    </div>

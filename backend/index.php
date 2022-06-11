@@ -22,6 +22,7 @@ if(isset($_POST['admin'])){
                 $_SESSION['username'] = $username;
                 $_SESSION['pass'] = $pass;
                 $_SESSION['role'] = 1;
+                $_SESSION['success'] = true;
                 header('Location:./administrator');
             }else{
                 header('Location:index.php?alert=invalidpass');

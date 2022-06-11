@@ -30,3 +30,9 @@
 .dropdown-toggle {
   outline: 0;
 }
+
+.bg-cust{
+  background-image: url('./assets/img/BGCustomer.png');
+  background-attachment: fixed;
+  background-size: cover;
+}

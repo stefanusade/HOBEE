@@ -55,7 +55,7 @@ include "header.php"; ?>
 										                <td>
 										                <form action='details.php' method='POST'>
 										                <input type='hidden' name='role' value='customer'/>
-										                <button class='btn btn-sm btn-primary' type='submit' name='lihat' value='$d[id]'><i class='fas fa-eye'></i></button>
+										                <button class='btn btn-sm btn-primary' type='submit' name='lihat' value='$d[id]' data-toggle='tooltip' data-placement='bottom' title='Lihat'><i class='fas fa-eye'></i></button>
 										                </form></td>
 										            </tr>
 										        ";

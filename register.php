@@ -1,7 +1,9 @@
 <?php
 $page = "Pendaftaran Customer";
 include "header.php";
+$daftar_bank = mysqli_query($conn,"SELECT * FROM bank");
 $daftar_kota = mysqli_query($conn,"SELECT * FROM kota");
+$minusia = date('Y-m-d',strtotime('-17years'));
 if(isset($_POST['submit'])){
     if(!empty($_POST['username']) && !empty($_POST['nama'])
     && !empty($_POST['email']) && !empty($_POST['no_hp'])
@@ -15,6 +17,7 @@ if(isset($_POST['submit'])){
         $no_hp = $_POST['no_hp'];
         $nik = $_POST['nik'];
         $norek = $_POST['norek'];
+        $bank = $_POST['bank'];
         $jenis_kelamin = $_POST['jenis_kelamin'];
         $tgl_lahir = date('Y-m-d',strtotime($_POST['tgl_lahir']));
         $alamat = $_POST['alamat'];
@@ -31,8 +34,8 @@ if(isset($_POST['submit'])){
                 $options = ['cost' => 10,];
                 $hash = password_hash($pass, PASSWORD_BCRYPT, $options);
                 $simpan = mysqli_query($conn,"INSERT INTO customer 
-                (nama_customer,id_jenis_kelamin,tanggal_lahir,no_jalan,nama_jalan,id_kota,no_hp,no_ktp,no_rekening,
-                username,email,password) VALUES ('$nama','$jenis_kelamin','$tgl_lahir','$no_rumah','$alamat','$kota','$no_hp','$nik','$norek','$username','$email','$hash')");
+                (nama_customer,id_jenis_kelamin,tanggal_lahir,no_jalan,nama_jalan,id_kota,no_hp,no_ktp,no_rekening,id_bank,
+                username,email,password) VALUES ('$nama','$jenis_kelamin','$tgl_lahir','$no_rumah','$alamat','$kota','$no_hp','$nik','$norek','$id_bank','$username','$email','$hash')");
                 if($simpan){
                     $kode = rand(100000,999999);
                     $_SESSION['verify'] = $email;
@@ -117,6 +120,15 @@ if(!empty($_GET['alert'])){
                         <input type="text" class="form-control numeric" name="norek" id="norek" placeholder="Nomor Rekening Bank" maxlength="13" required>
                     </div>
                     <div class="col-md-6">
+                        <label class="mt-3" for="norek">Nama Bank <span class="text-danger">*</span></label>
+                        <select class="form-select" name="bank" id="bank">
+                            <option selected>Pilih Bank</option>
+                            <?php while($b = mysqli_fetch_assoc($daftar_bank)):?>
+                            <option value="<?= $b['id_bank'];?>"><?= $b['nama_bank'];?></option>
+                            <?php endwhile; ?>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
                         <label class="mt-3" for="jk">Jenis Kelamin <span class="text-danger">*</span></label>
                         <select type="text" class="form-select" name="jenis_kelamin" id="jk" placeholder="Jenis Kelamin" required>
                             <option selected>Pilih Salah Satu</option>
@@ -126,7 +138,7 @@ if(!empty($_GET['alert'])){
                     </div>
                     <div class="col-md-6">
                         <label class="mt-3" for="tl">Tanggal Lahir <span class="text-danger">*</span></label>
-                        <input type="date" class="form-control" name="tgl_lahir" id="tl" placeholder="Email" required>
+                        <input type="date" class="form-control" name="tgl_lahir" id="tl" max="<?= $minusia; ?>" required>
                     </div>
                     <div class="col-md-6">
                         <label class="mt-3" for="username">Alamat Lengkap <span class="text-danger">*</span></label>
@@ -147,7 +159,9 @@ if(!empty($_GET['alert'])){
                             <option value="<?= $k['id_kota'];?>"><?= $k['nama_kota'];?></option>
                             <?php endwhile; ?>
                         </select>
-                    </div>
+                    </div>  
+                </div>
+                <div class="row">
                     <div class="col-md-6">
                         <label class="mt-3" for="pass">Password <span class="text-danger">*</span></label>
                         <div class="input-group mb-3">

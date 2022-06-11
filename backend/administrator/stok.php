@@ -58,7 +58,7 @@ $stok = mysqli_query($conn,"SELECT ss.*, s.nama_supplier FROM stok_supplier ss, 
 										                <td>
 										                <form action='details.php' method='POST'>
 										                <input type='hidden' name='permintaan' value='1'>
-										                <button class='btn btn-sm btn-primary' type='submit' name='lihat' value='$d[id_supplier]'><i class='fas fa-eye'></i></button>
+										                <button class='btn btn-sm btn-primary' type='submit' name='lihat' value='$d[id_supplier]' data-toggle='tooltip' data-placement='bottom' title='Lihat'><i class='fas fa-eye'></i></button>
 										                </form></td>
 										            </tr>
 										        ";

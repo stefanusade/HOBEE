@@ -40,7 +40,7 @@ $fetch = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM edukasi WHERE id_e
     			<div class="col-md-12">
     				<div class="card">
     					<div class="card-body py-3">
-    					    <a href="edukasi.php?alert=cancel-edit" class="btn btn-danger">BATALKAN</a> 
+    					    <a href="edukasi.php?alert=cancel-edit" class="btn btn-danger">BATAL</a> 
     					    <form action="./edit/edukasi.php" method="post" enctype="multipart/form-data">
     					        <div class="mt-3">
     					            <label for="judul">Judul Konten</label>
@@ -69,7 +69,7 @@ $fetch = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM edukasi WHERE id_e
     					            <label for="link">Link Video Youtube (contoh: https://www.youtube.com/watch?v=aBcDeF)</label>
         					        <input class="form-control" type="url" name="link" id="link" value="https://www.youtube.com/watch?v=<?= $fetch['link_video'];?>" required>
     					        </div>
-    					        <input class="btn btn-primary form-control my-3" type="submit" name="submit" id="submit" value="PERBARUI">
+    					        <input class="btn btn-primary btn-block my-3" type="submit" name="submit" id="submit" value="SIMPAN">
                             </form>
     					</div>
     				</div>
